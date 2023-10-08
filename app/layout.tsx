@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import Navbar from "./components/navbar/Navbar";
 import RegisterModal from "./components/modal/RegisterModal";
+import ToasterProvider from "./components/providers/ToasterProvider";
 
 export const metadata: Metadata = {
   title: "Airbnb Better",
@@ -21,8 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Navbar />
+        <ToasterProvider />
         <RegisterModal />
+        <Navbar />
         {children}
       </body>
     </html>
