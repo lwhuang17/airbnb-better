@@ -1,5 +1,3 @@
 export default function Home() {
-  return (
-    <div className="text-rose-500 text-2xl">Airbnb clone</div>
-  )
+  return <div className="text-2xl text-rose-500">Airbnb clone</div>;
 }

@@ -78,10 +78,10 @@ const RegisterModal = () => {
   const footerContent = (
     <div
       className="
+        mt-3
         flex
         flex-col
         gap-4
-        mt-3
       "
     >
       <hr />
@@ -99,10 +99,10 @@ const RegisterModal = () => {
       />
       <div
         className="
-          text-neutral-500
-          text-center
           mt-4
+          text-center
           font-light
+          text-neutral-500
         "
       >
         <div className="flex flex-row justify-center gap-2">
@@ -110,8 +110,8 @@ const RegisterModal = () => {
           <div
             onClick={registerModal.onClose}
             className="
-              text-neutral-800
               cursor-pointer
+              text-neutral-800
               hover:underline
             "
           >
