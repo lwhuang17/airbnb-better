@@ -1,6 +1,5 @@
 "use client";
 import { signIn } from "next-auth/react";
-import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
@@ -52,6 +51,11 @@ const LoginModal = () => {
     });
   };
 
+  const switchToRegister = useCallback(() => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal]);
+
   const bodyContent = (
     <div className="flex flex-col gap-5">
       <Heading title="Welcome back" subtitle="Login to your account!" />
@@ -87,13 +91,13 @@ const LoginModal = () => {
       <hr />
       <Button
         outline
-        label="Continue with Google"
+        label="Login with Google"
         icon={FcGoogle}
         onClick={() => signIn("google")}
       />
       <Button
         outline
-        label="Continue with Github"
+        label="Login with Github"
         icon={AiFillGithub}
         onClick={() => signIn("github")}
       />
@@ -106,16 +110,16 @@ const LoginModal = () => {
         "
       >
         <div className="flex flex-row justify-center gap-2">
-          <div>Already have an account?</div>
+          <div>First time using Airbnb?</div>
           <div
-            onClick={loginModal.onClose}
+            onClick={switchToRegister}
             className="
               cursor-pointer
               text-neutral-800
               hover:underline
             "
           >
-            Login
+            Create an account
           </div>
         </div>
       </div>
@@ -126,7 +130,7 @@ const LoginModal = () => {
       disabled={isLoading}
       isOpen={loginModal.isOpen}
       title="Login"
-      actionLabel="Continue"
+      actionLabel="Login"
       onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
