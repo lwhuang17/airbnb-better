@@ -1,7 +1,7 @@
 "use client";
 import useRentModal from "@/app/hooks/useRentModal";
 import Modal from "./Modal";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useMemo, useState } from "react";
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
@@ -11,6 +11,9 @@ import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
 import ImageUpload from "../inputs/ImageUpload";
 import Input from "../inputs/Input";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 enum STEPS {
   CATEGORY,
@@ -22,11 +25,32 @@ enum STEPS {
 }
 
 const RentModal = () => {
+  const router = useRouter();
   const rentModal = useRentModal();
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
   const onBack = () => setStep((val) => val - 1);
   const onNext = () => setStep((val) => val + 1);
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step !== STEPS.PRICE) {
+      return onNext();
+    }
+    setIsLoading(true);
+    axios
+      .post("/api/listings", data)
+      .then(() => {
+        toast.success("Listing created!");
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        setIsLoading(false);
+        rentModal.onClose();
+      })
+      .catch(() => {
+        toast.error("Something went wrong");
+        setIsLoading(false);
+      });
+  };
 
   const actionLabel = useMemo(() => {
     if (step === STEPS.PRICE) {
@@ -48,6 +72,7 @@ const RentModal = () => {
     watch,
     setValue,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       category: "",
@@ -55,7 +80,7 @@ const RentModal = () => {
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
-      imgSrc: "",
+      imageSrc: "",
       price: 1,
       title: "",
       description: "",
@@ -67,7 +92,7 @@ const RentModal = () => {
   const guestCount = watch("guestCount");
   const roomCount = watch("roomCount");
   const bathroomCount = watch("bathroomCount");
-  const imgSrc = watch("imgSrc");
+  const imageSrc = watch("imageSrc");
 
   const Map = useMemo(() => {
     return dynamic(() => import("../Map"), { ssr: false });
@@ -173,8 +198,8 @@ const RentModal = () => {
           subtitle="Show guests what your place looks like!"
         />
         <ImageUpload
-          imgSrc={imgSrc}
-          onChange={(src) => setCustomValue("imgSrc", src)}
+          imgSrc={imageSrc}
+          onChange={(src) => setCustomValue("imageSrc", src)}
         />
       </div>
     );
@@ -221,6 +246,7 @@ const RentModal = () => {
           id="price"
           key="price"
           label="Price"
+          type="number"
           register={register}
           formatPrice
           disabled={isLoading}
@@ -239,7 +265,7 @@ const RentModal = () => {
       title="Airbnb your home!"
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       body={bodyContent}
     />
