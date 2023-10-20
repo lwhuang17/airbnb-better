@@ -189,6 +189,7 @@ const RentModal = () => {
         />
         <Input
           id="title"
+          key="title"
           label="Title"
           disabled={isLoading}
           register={register}
@@ -198,6 +199,7 @@ const RentModal = () => {
         <hr />
         <Input
           id="description"
+          key="description"
           label="Description"
           disabled={isLoading}
           register={register}
@@ -217,6 +219,7 @@ const RentModal = () => {
         />
         <Input
           id="price"
+          key="price"
           label="Price"
           register={register}
           formatPrice
