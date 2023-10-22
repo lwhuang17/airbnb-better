@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { SafeUser } from "../types";
 
 interface AvatarProps {
   src?: string | null | undefined;
