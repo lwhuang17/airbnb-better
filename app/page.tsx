@@ -9,8 +9,6 @@ export default async function Home() {
   const listings = await getListings();
   if (listings.length === 0) {
     return <EmptyState showReset />;
-  } else {
-    console.log("My listings: ", listings);
   }
   return (
     <Container>
