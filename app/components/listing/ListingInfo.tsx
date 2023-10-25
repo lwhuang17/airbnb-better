@@ -2,11 +2,11 @@ import useCountries from "@/app/hooks/useCountries";
 import { IconType } from "react-icons";
 import Avatar from "../Avatar";
 import ListingCategory from "./ListingCategory";
-import { User } from "@prisma/client";
 import dynamic from "next/dynamic";
+import { SafeUser } from "@/app/types";
 
 interface ListingInfoProps {
-  user: User;
+  user: SafeUser;
   description: string;
   category: { icon: IconType; label: string; description: string } | undefined;
   roomCount: number;
