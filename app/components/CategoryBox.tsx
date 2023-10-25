@@ -1,7 +1,7 @@
-import { IconType } from "react-icons";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
 import qs from "query-string";
+import { useCallback } from "react";
+import { IconType } from "react-icons";
 
 interface CategoryBoxProps {
   label: string;

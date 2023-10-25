@@ -1,12 +1,12 @@
-import "./globals.css";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import Navbar from "./components/navbar/Navbar";
-import RegisterModal from "./components/modal/RegisterModal";
-import ToasterProvider from "./components/providers/ToasterProvider";
-import LoginModal from "./components/modal/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
+import LoginModal from "./components/modal/LoginModal";
+import RegisterModal from "./components/modal/RegisterModal";
 import RentModal from "./components/modal/RentModal";
+import Navbar from "./components/navbar/Navbar";
+import ToasterProvider from "./components/providers/ToasterProvider";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Airbnb Better",

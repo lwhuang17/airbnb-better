@@ -1,9 +1,9 @@
 import useCountries from "@/app/hooks/useCountries";
+import { SafeUser } from "@/app/types";
+import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
 import Avatar from "../Avatar";
 import ListingCategory from "./ListingCategory";
-import dynamic from "next/dynamic";
-import { SafeUser } from "@/app/types";
 
 interface ListingInfoProps {
   user: SafeUser;
