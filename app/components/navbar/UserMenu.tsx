@@ -25,6 +25,15 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     setIsOpen((value) => !value);
   }, []);
 
+  const closeMenu = (callback?: Function) => {
+    return () => {
+      if (callback) {
+        callback();
+      }
+      setIsOpen(false);
+    };
+  };
+
   const onRent = useCallback(() => {
     if (!currentUser) {
       return loginModal.onOpen();
@@ -97,20 +106,39 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
             {currentUser ? (
               <>
                 <MenuItem
-                  onClick={() => router.push("/trips")}
+                  onClick={closeMenu(() => {
+                    router.push("/trips");
+                  })}
                   label="My trips"
                 />
-                <MenuItem onClick={() => {}} label="My favorites" />
-                <MenuItem onClick={() => {}} label="My reservations" />
-                <MenuItem onClick={() => {}} label="My properties" />
-                <MenuItem onClick={rentModal.onOpen} label="Airbnb my home" />
+                <MenuItem onClick={closeMenu()} label="My favorites" />
+                <MenuItem
+                  onClick={closeMenu(() => {
+                    router.push("/reservations");
+                  })}
+                  label="My listing reservations"
+                />
+                <MenuItem onClick={closeMenu()} label="My properties" />
+                <MenuItem
+                  onClick={closeMenu(() => {
+                    rentModal.onOpen();
+                    setIsOpen(false);
+                  })}
+                  label="Airbnb my home"
+                />
                 <hr />
-                <MenuItem onClick={() => signOut()} label="Logout" />
+                <MenuItem onClick={closeMenu(() => signOut())} label="Logout" />
               </>
             ) : (
               <>
-                <MenuItem onClick={loginModal.onOpen} label="Login" />
-                <MenuItem onClick={registerModal.onOpen} label="Sign up" />
+                <MenuItem
+                  onClick={closeMenu(() => loginModal.onOpen())}
+                  label="Login"
+                />
+                <MenuItem
+                  onClick={closeMenu(() => registerModal.onOpen())}
+                  label="Sign up"
+                />
               </>
             )}
           </div>
