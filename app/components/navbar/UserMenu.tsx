@@ -123,7 +123,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                   })}
                   label="My listing reservations"
                 />
-                <MenuItem onClick={closeMenu()} label="My properties" />
+                <MenuItem
+                  onClick={closeMenu(() => {
+                    router.push("/properties");
+                  })}
+                  label="My properties"
+                />
                 <MenuItem
                   onClick={closeMenu(() => {
                     rentModal.onOpen();
