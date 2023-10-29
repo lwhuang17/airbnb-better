@@ -7,6 +7,7 @@ import qs from "query-string";
 import { useCallback, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 import Heading from "../Heading";
+import Calendar from "../inputs/Calendar";
 import CountrySelect, { CountrySelectValue } from "../inputs/CountrySelect";
 import Modal from "./Modal";
 
@@ -119,14 +120,40 @@ const SearchModal = () => {
       <Map center={location?.latlng} />
     </div>
   );
+
+  if (step === STEPS.DATE) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="When do you plan to go?"
+          subtitle="Make sure everyone is free!"
+        />
+        <Calendar
+          value={dateRange}
+          onChange={(value) => setDateRange(value.selection)}
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading title="More information" subtitle="Find your perfect place!" />
+      </div>
+    );
+  }
+
   return (
     <Modal
       disabled={false}
       isOpen={searchModal.isOpen}
       title="Filters"
-      actionLabel="Search"
+      actionLabel={actionLabel}
+      secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
+      secondaryActionLabel={secondaryActionLabel}
       onClose={searchModal.onClose}
-      onSubmit={searchModal.onOpen}
+      onSubmit={onSubmit}
       body={bodyContent}
       footer={<div></div>}
     />
