@@ -8,6 +8,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 import Heading from "../Heading";
 import Calendar from "../inputs/Calendar";
+import Counter from "../inputs/Counter";
 import CountrySelect, { CountrySelectValue } from "../inputs/CountrySelect";
 import Modal from "./Modal";
 
@@ -74,7 +75,6 @@ const SearchModal = () => {
       },
       { skipNull: true }
     );
-    console.log("Final url constructed", url);
     setStep(STEPS.LOCATION);
     searchModal.onClose();
     router.push(url);
@@ -140,6 +140,24 @@ const SearchModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading title="More information" subtitle="Find your perfect place!" />
+        <Counter
+          title="Guests"
+          subtitle="How many guests are coming?"
+          value={guestCount}
+          onChange={(value) => setGuestCount(value)}
+        />
+        <Counter
+          title="Rooms"
+          subtitle="How many rooms do you need?"
+          value={roomCount}
+          onChange={(value) => setRoomCount(value)}
+        />
+        <Counter
+          title="Bathrooms"
+          subtitle="How many bathrooms do you need?"
+          value={bathroomCount}
+          onChange={(value) => setBathroomCount(value)}
+        />
       </div>
     );
   }
