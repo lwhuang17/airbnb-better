@@ -121,7 +121,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                   onClick={closeMenu(() => {
                     router.push("/reservations");
                   })}
-                  label="My listing reservations"
+                  label="My reservations"
                 />
                 <MenuItem
                   onClick={closeMenu(() => {

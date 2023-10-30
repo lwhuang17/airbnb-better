@@ -5,6 +5,11 @@ import FavoritesClient from "./FavoritesClient";
 
 const FavoritesListingPage = async () => {
   const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return <EmptyState title="Unauthorized" subtitle="Please login" />;
+  }
+
   const favoriteListings = await getFavoriteListings();
   if (favoriteListings.length === 0) {
     return (
